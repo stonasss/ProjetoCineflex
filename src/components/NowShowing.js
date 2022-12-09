@@ -1,7 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 
 export default function NowShowing() {
     const [movies, setMovies] = useState([]);
@@ -14,6 +16,8 @@ export default function NowShowing() {
         });
     }, []);
 
+    console.log(movies)
+
     if (movies === 0) {
         return <div>Carregando...</div>
     }
@@ -25,9 +29,11 @@ export default function NowShowing() {
             </SectionTitle>
             <Movies>
                 {movies.map(movie => (
-                    <Movie key={movie.id}>
-                        <img src={movie.posterURL} alt={movie.title} />
-                    </Movie>
+                    <Link to={`/sessoes/${movie.id}`}>
+                        <Movie key={movie.id}>
+                            <img src={movie.posterURL} alt={movie.title} />
+                        </Movie>
+                    </Link>
                 ))}
             </Movies>
         </>

@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function Logo() {
     return (
         <Container>
-            <Title>
-                CINEFLEX
-            </Title>
+            <Link to="/">
+                <Title>
+                    <p>CINEFLEX</p>
+                </Title>
+            </Link>
         </Container>
     )
 }
@@ -15,7 +18,7 @@ const Container = styled.header`
     display: flex;
     align-items: center;
     background-color: #C3CFD9;
-    padding: 12px 0 12px 0;
+    padding: 14px 0 14px 0;
 `
 
 const Title = styled.div`
@@ -28,4 +31,9 @@ const Title = styled.div`
     font-size: 34px;
     text-align: center;
     color: #e8833a;
+
+    p {
+        text-align: center;
+        text-decoration: none;
+    }
 `
