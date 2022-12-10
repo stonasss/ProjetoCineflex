@@ -14,7 +14,6 @@ export default function ChooseSeats() {
         const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
 
         req.then((response) => {
-            console.log(response)
             setTime(response.data.day);
             setDay(response.data);
             setSeats(response.data.seats);
@@ -22,8 +21,6 @@ export default function ChooseSeats() {
         });
         req.catch((err) => console.log(err.response.data));
     }, [idSessao]);
-
-    
 
     if (seats === 0) {
         return <div>Carregando...</div>
@@ -57,7 +54,7 @@ export default function ChooseSeats() {
             <Footer>
                 <Content>
                     <Image>
-                        <img src={footerInfo.posterURL}/>
+                        <img src={footerInfo.posterURL} />
                     </Image>
                     <Text>
                         <h1>{footerInfo.title}</h1>

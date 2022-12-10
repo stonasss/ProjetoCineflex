@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Logo from "./Logo"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SessionsPage from "./SessionsPage";
@@ -12,8 +12,8 @@ export default function CineScreen() {
       <Logo />
       <Routes>
         <Route path="/" element={<NowShowing />} />
-        <Route path="/sessoes/:idFilme" element={<SessionsPage/>} />
-        <Route path="/assentos/:idSessao" element={<ChooseSeats/>} />
+        <Route path="/sessoes/:idFilme" element={<SessionsPage />} />
+        <Route path="/assentos/:idSessao" element={<ChooseSeats />} />
       </Routes>
     </BrowserRouter>
   )

@@ -7,7 +7,7 @@ export default function Logo() {
         <Container>
             <Title>
                 <Link to="/">
-                <p>CINEFLEX</p>
+                    <p>CINEFLEX</p>
                 </Link>
             </Title>
         </Container>

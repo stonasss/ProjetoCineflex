@@ -14,41 +14,41 @@ export default function SessionsPage() {
         req.then((response) => {
             setSelectedMovie(response.data.days);
             setFooterInfo(response.data);
-            console.log(response.data.title);
         });
         req.catch((err) => console.log(err.response.data));
-        }, []);
+    }, []);
 
-        console.log(selectedMovie)
-
-        if (selectedMovie === 0) {
-            return <div>Carregando...</div>
-        }
+    if (selectedMovie === 0) {
+        return <div>Carregando...</div>
+    }
 
     return (
         <>
             <SectionTitle>
                 Selecione o horário
             </SectionTitle>
+
             <Sessions>
                 {selectedMovie.map(movie => (
-                <>
-                    <p>{movie.weekday} - {movie.date}</p>
-                    {movie.showtimes.map(time => (
+                    <>
+                        <p>{movie.weekday} - {movie.date}</p>
+
                         <Time>
-                        <Link to={`/assentos/${time.id}`}>
-                            <Button>{time.name}</Button>
-                        </Link>
+                            {movie.showtimes.map(time => (
+                                <Link to={`/assentos/${time.id}`}>
+                                    <Button><p>{time.name}</p></Button>
+                                </Link>
+                            ))}
                         </Time>
-                    ))};
-                </>
+
+                    </>
                 ))}
             </Sessions>
 
             <Footer>
                 <Content>
                     <Image>
-                        <img src={footerInfo.posterURL}/>
+                        <img src={footerInfo.posterURL} />
                     </Image>
                     <Text>
                         <h1>{footerInfo.title}</h1>
@@ -72,10 +72,8 @@ const SectionTitle = styled.div`
     color: #293845;
 `
 
-const Sessions = styled.span`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 120px;
+const Sessions = styled.div`
+    margin: 10px 0 120px 25px;
 
     p {
         font-family: 'Roboto';
@@ -87,9 +85,10 @@ const Sessions = styled.span`
 `
 
 const Time = styled.div`
+    width: 210px;
     display: flex;
-    flex-direction: row;
-    margin: 30px 5px 30px 20px;
+    justify-content: space-between;
+    margin: 20px 30px 20px 0;
 `
 
 const Button = styled.button`
@@ -97,6 +96,10 @@ const Button = styled.button`
     height: 43px;
     background-color: #E8833A;
     border-radius: 3px;
+    
+    p {
+        color: inherit;
+    }
 `
 
 const Footer = styled.footer`
