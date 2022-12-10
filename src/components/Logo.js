@@ -5,11 +5,9 @@ import { Link } from "react-router-dom";
 export default function Logo() {
     return (
         <Container>
-            <Link to="/">
-                <Title>
-                    <p>CINEFLEX</p>
-                </Title>
-            </Link>
+            <Title>
+                <p>CINEFLEX</p>
+            </Title>
         </Container>
     )
 }
@@ -31,9 +29,4 @@ const Title = styled.div`
     font-size: 34px;
     text-align: center;
     color: #e8833a;
-
-    p {
-        text-align: center;
-        text-decoration: none;
-    }
 `

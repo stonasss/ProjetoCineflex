@@ -1,12 +1,16 @@
-import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 
-export default function NowShowing() {
-    const [movies, setMovies] = useState([]);
+export default function NowShowing(
+    {
+        movies,
+        setMovies,
+        setMovieId
+    }
+) {
 
     useEffect(() => {
         const request = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
@@ -30,7 +34,10 @@ export default function NowShowing() {
             <Movies>
                 {movies.map(movie => (
                     <Link to={`/sessoes/${movie.id}`}>
-                        <Movie key={movie.id}>
+                        <Movie 
+                            key={movie.id}
+                            onClick={() => {setMovieId(movie.id)}}
+                        >
                             <img src={movie.posterURL} alt={movie.title} />
                         </Movie>
                     </Link>
@@ -54,6 +61,8 @@ const SectionTitle = styled.div`
 
 const Movies = styled.div`
     display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 100px;
     flex-wrap: wrap;
     align-items: center;
     background-color: #FFFFFF;
