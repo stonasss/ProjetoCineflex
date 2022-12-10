@@ -4,13 +4,8 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 
-export default function NowShowing(
-    {
-        movies,
-        setMovies,
-        setMovieId
-    }
-) {
+export default function NowShowing() {
+    const [movies, setMovies] = useState([]);
 
     useEffect(() => {
         const request = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
@@ -19,8 +14,6 @@ export default function NowShowing(
             setMovies(response.data);
         });
     }, []);
-
-    console.log(movies)
 
     if (movies === 0) {
         return <div>Carregando...</div>
@@ -34,10 +27,7 @@ export default function NowShowing(
             <Movies>
                 {movies.map(movie => (
                     <Link to={`/sessoes/${movie.id}`}>
-                        <Movie 
-                            key={movie.id}
-                            onClick={() => {setMovieId(movie.id)}}
-                        >
+                        <Movie key={movie.id}>
                             <img src={movie.posterURL} alt={movie.title} />
                         </Movie>
                     </Link>

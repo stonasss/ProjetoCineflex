@@ -3,28 +3,18 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-export default function SessionsPage(
-    {
-        setMovieName,
-        setPoster,
-        movieName,
-        poster,
-        day,
-        time,
-        setDay,
-        setTime
-    }
-) {
+export default function SessionsPage() {
     const { idFilme } = useParams();
     const [selectedMovie, setSelectedMovie] = useState([]);
+    const [footerInfo, setFooterInfo] = useState([]);
 
     useEffect(() => {
         const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`);
 
         req.then((response) => {
             setSelectedMovie(response.data.days);
-            setPoster(response.data.posterURL);
-            setMovieName(response.data.title)
+            setFooterInfo(response.data);
+            console.log(response.data.title);
         });
         req.catch((err) => console.log(err.response.data));
         }, []);
@@ -46,10 +36,8 @@ export default function SessionsPage(
                     <p>{movie.weekday} - {movie.date}</p>
                     {movie.showtimes.map(time => (
                         <Time>
-                        <Link to={`/assentos/${idFilme}`}>
-                            <Button 
-                                onClick={() => {setDay(movie.weekday); setTime(time.name)}}
-                            >{time.name}</Button>
+                        <Link to={`/assentos/${time.id}`}>
+                            <Button>{time.name}</Button>
                         </Link>
                         </Time>
                     ))};
@@ -60,10 +48,10 @@ export default function SessionsPage(
             <Footer>
                 <Content>
                     <Image>
-                        <img src={poster}/>
+                        <img src={footerInfo.posterURL}/>
                     </Image>
                     <Text>
-                        <h1>{movieName}</h1>
+                        <h1>{footerInfo.title}</h1>
                         <h2></h2>
                     </Text>
                 </Content>

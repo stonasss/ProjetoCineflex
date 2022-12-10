@@ -6,7 +6,9 @@ export default function Logo() {
     return (
         <Container>
             <Title>
+                <Link to="/">
                 <p>CINEFLEX</p>
+                </Link>
             </Title>
         </Container>
     )
@@ -29,4 +31,9 @@ const Title = styled.div`
     font-size: 34px;
     text-align: center;
     color: #e8833a;
+    
+    a:link, a:visited {
+        text-decoration: none;
+        color: inherit;
+    }
 `

@@ -2,29 +2,28 @@ import styled from "styled-components";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
 
-export default function ChooseSeats(
-    {
-        movieName,
-        poster,
-        day,
-        time
-    }
-) {
-    const { idFilme } = useParams();
+export default function ChooseSeats() {
+    const { idSessao } = useParams();
     const [seats, setSeats] = useState([]);
+    const [footerInfo, setFooterInfo] = useState([]);
+    const [day, setDay] = useState([]);
+    const [time, setTime] = useState([]);
 
     useEffect(() => {
-        const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idFilme}/seats`);
+        const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
 
         req.then((response) => {
+            console.log(response)
+            setTime(response.data.day);
+            setDay(response.data);
             setSeats(response.data.seats);
+            setFooterInfo(response.data.movie);
         });
         req.catch((err) => console.log(err.response.data));
-    }, []);
+    }, [idSessao]);
 
-    console.log(seats)
+    
 
     if (seats === 0) {
         return <div>Carregando...</div>
@@ -54,12 +53,18 @@ export default function ChooseSeats(
                     <SeatText>Indisponível</SeatText>
                 </Yellow>
             </SeatTypes>
-            <Footer
-                movieName={movieName}
-                poster={poster}
-                day={day}
-                time={time}
-            />
+
+            <Footer>
+                <Content>
+                    <Image>
+                        <img src={footerInfo.posterURL}/>
+                    </Image>
+                    <Text>
+                        <h1>{footerInfo.title}</h1>
+                        <h2>{time.weekday} - {day.name}</h2>
+                    </Text>
+                </Content>
+            </Footer>
         </>
 
     )
@@ -157,4 +162,45 @@ const YwCircle = styled.div`
     border: 1px solid #F7C52B;
     border-radius: 17px;
     background-color: #FBE192;
+`
+
+const Footer = styled.footer`
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    height: 117px;
+    background-color: #dee6ec;
+`
+
+const Image = styled.div`
+    width: 64px;
+    height: 89px;
+    margin: 14px 0 14px 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    align-items: center;
+
+    img {
+        padding: 8px;
+        width: 48px;
+        height: 72px;
+    }
+`
+
+const Content = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const Text = styled.span`
+
+    h1, h2 {
+        margin-left: 16px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 26px;
+    }
 `
