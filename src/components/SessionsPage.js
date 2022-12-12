@@ -28,15 +28,24 @@ export default function SessionsPage() {
                 Selecione o horário
             </SectionTitle>
 
-            <Sessions data-test="movie-day">
+            <Sessions>
                 {selectedMovie.map(movie => (
                     <>
-                        <p key={movie.id}>{movie.weekday} - {movie.date}</p>
+                        <p
+                            data-test="movie-day"
+                            key={movie.id}
+                        >
+                            {movie.weekday} - {movie.date}
+                        </p>
 
                         <Time>
                             {movie.showtimes.map(time => (
-                                <Link key={time.id} to={`/assentos/${time.id}`}>
-                                    <Button data-test="showtime"><p>{time.name}</p></Button>
+                                <Link
+                                    data-test="showtime"
+                                    key={time.id}
+                                    to={`/assentos/${time.id}`}
+                                >
+                                    <Button><p>{time.name}</p></Button>
                                 </Link>
                             ))}
                         </Time>
