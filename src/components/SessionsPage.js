@@ -18,10 +18,6 @@ export default function SessionsPage() {
         req.catch((err) => console.log(err.response.data));
     }, [idFilme]);
 
-    if (selectedMovie === 0) {
-        return <div>Carregando...</div>
-    }
-
     return (
         <>
             <SectionTitle>
@@ -41,11 +37,13 @@ export default function SessionsPage() {
                         <Time>
                             {movie.showtimes.map(time => (
                                 <Link
-                                    data-test="showtime"
                                     key={time.id}
                                     to={`/assentos/${time.id}`}
                                 >
-                                    <Button><p>{time.name}</p></Button>
+                                    <button
+                                        data-test="showtime"
+                                    >
+                                    <p>{time.name}</p></button>
                                 </Link>
                             ))}
                         </Time>
@@ -101,6 +99,17 @@ const Time = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 20px 30px 20px 0;
+
+    button {
+        width: 83px;
+        height: 43px;
+        background-color: #E8833A;
+        border-radius: 3px;
+    }
+
+    button > p {
+        color: inherit;
+    }
 `
 
 const Button = styled.button`

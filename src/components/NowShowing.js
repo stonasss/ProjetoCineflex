@@ -15,14 +15,6 @@ export default function NowShowing() {
         });
     }, []);
 
-    if (movies === 0) {
-        return (
-            <Wait>
-                Carregando ...
-            </Wait>
-        )
-    }
-
     return (
         <>
             <SectionTitle>

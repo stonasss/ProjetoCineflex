@@ -35,14 +35,6 @@ export default function ChooseSeats({ setOrder }) {
         req.catch((err) => console.log(err.response.data));
     }, [idSessao]);
 
-    if (seats === 0) {
-        return (
-            <Wait>
-                Carregando ...
-            </Wait>
-        )
-    }
-
     function selectSeat(seat) {
         if (seat.isAvailable === false) {
             alert('O assento escolhido não está disponível')
@@ -102,19 +94,25 @@ export default function ChooseSeats({ setOrder }) {
             <Seats>
                 {seats.map(seat => {
                     return seat.isAvailable === false ? (
-                        <Seat
+                        <span
                             data-test="seat"
                             key={seat.id}
-                            background={"#FBE192"}
+                        >
+                        <Seat
                             onClick={() => selectSeat(seat)}
+                            background={"#FBE192"}
                         >{seat.name.padStart(2, '0')}</Seat>
+                        </span>
                     ) : (
-                        <Seat
+                        <span
                             data-test="seat"
                             key={seat.id}
+                        >
+                        <Seat 
                             background={selectedSeats.includes(seat.id) ? state : "#C3CFD9"}
                             onClick={() => selectSeat(seat)}
                         >{seat.name.padStart(2, '0')}</Seat>
+                        </span>
                     );
                 })}
             </Seats>
@@ -152,39 +150,31 @@ export default function ChooseSeats({ setOrder }) {
                 ></input>
             </Personal>
 
-            <Finish
-                data-test="book-seat-btn"
-                onClick={completeOrder}
-            >
-                <p>Reservar assento(s)</p>
+            <Finish>
+                <button
+                    data-test="book-seat-btn"
+                    onClick={completeOrder}
+                ><p>Reservar assento(s)</p></button>
             </Finish>
 
-            <Footer>
-                <Content data-test="footer">
-                    <Image>
+            <Bottom>
+                <footer data-test="footer">
+                    <span>
                         <img src={footerInfo.posterURL} alt={footerInfo.title} />
-                    </Image>
-                    <Text>
+                    </span>
+                    <p>
                         <h1>{footerInfo.title}</h1>
                         <h2>{time.weekday} - {day.name}</h2>
-                    </Text>
-                </Content>
-            </Footer>
+                    </p>
+                </footer>
+            </Bottom>
         </>
     )
 }
 
-const Wait = styled.div`
-    display: flex;
-    margin: auto;
-    font-family: 'Roboto';
-    font-weight: 700;
-    font-size: 18px;
-`
-
 const SectionTitle = styled.div`
     display: flex;
-    margin: 60px auto 0 auto;
+    margin: 35px auto 0 auto;
     padding: 50px 0 35px 0;
     font-family: 'Roboto';
     font-style: normal;
@@ -290,37 +280,39 @@ const YwCircle = styled.div`
     background-color: #FBE192;
 `
 
-const Footer = styled.footer`
+const Bottom = styled.footer`
     position: fixed;
     bottom: 0;
     z-index: 1;
     width: 100%;
     height: 117px;
     background-color: #dee6ec;
-`
 
-const Image = styled.div`
-    width: 64px;
-    height: 89px;
-    margin: 14px 0 14px 10px;
-    background-color: #FFFFFF;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
-    align-items: center;
+    span {
+        width: 64px;
+        height: 89px;
+        margin: 14px 0 14px 10px;
+        background-color: #FFFFFF;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+        align-items: center;
+    }
 
     img {
         padding: 8px;
         width: 48px;
         height: 72px;
     }
-`
 
-const Content = styled.div`
-    display: flex;
-    align-items: center;
-`
+    footer {
+        display: flex;
+        align-items: center;
+    }
 
-const Text = styled.span`
+    p {
+        display: flex;
+        flex-direction: column;
+    }
 
     h1, h2 {
         margin-left: 16px;
@@ -360,15 +352,9 @@ const Personal = styled.div`
     }
 `
 
-const Finish = styled.button`
-    width: 225px;
-    height: 42px;
+const Finish = styled.div`
     display: flex;
-    align-items: center;
-    margin: 40px auto 150px auto;
-    background-color: #E8833A;
-    border-radius: 3px;
-    border-color: #E8833A;
+    margin: 40px auto 140px auto;
 
     p {
         font-family: 'Roboto';
@@ -379,6 +365,16 @@ const Finish = styled.button`
         text-align: center;
         margin-left: 25px;
         color: #ffffff;
+    }
+
+    button {
+        width: 225px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        background-color: #E8833A;
+        border-radius: 3px;
+        border-color: #E8833A;
     }
 
     @media only screen and (max-width: 375px) {
