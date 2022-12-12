@@ -7,47 +7,39 @@ export default function FinalOrder({ order }) {
 
     return (
         <>
-            <Final>
-                <Container>
-                    <Title>
-                        <Link to="/">
-                            <p>CINEFLEX</p>
-                        </Link>
-                    </Title>
-                </Container>
 
-                <SuccessMSG>Pedido feito com sucesso!</SuccessMSG>
+            <SuccessMSG>Pedido feito com sucesso!</SuccessMSG>
 
-                <SubjectMovie data-test="movie-info">
-                    Filme e Sessão
-                    <Info>
-                        <h1>{orderInfo.movie}</h1>
-                        <h2>{orderInfo.date} {orderInfo.hour}</h2>
-                    </Info>
-                </SubjectMovie>
+            <SubjectMovie data-test="movie-info">
+                Filme e Sessão
+                <Info>
+                    <h1>{orderInfo.movie}</h1>
+                    <h2>{orderInfo.date} {orderInfo.hour}</h2>
+                </Info>
+            </SubjectMovie>
 
-                <SubjectSeat data-test="seats-info">
-                    Ingressos
-                    <Info>
-                        {seats.map(seat => <h1 key={seat}>{`Assento ${seat}`}</h1>)}
-                    </Info>
-                </SubjectSeat>
+            <SubjectSeat data-test="seats-info">
+                Ingressos
+                <Info>
+                    {seats.map(seat => <h1 key={seat}>{`Assento ${seat}`}</h1>)}
+                </Info>
+            </SubjectSeat>
 
-                <SubjectInfo data-test="client-info">
-                    Comprador
-                    <Info>
-                        <h1>Nome: {orderInfo.name}</h1>
-                        <h2>CPF: {orderInfo.cpf}</h2>
-                    </Info>
-                </SubjectInfo>
+            <SubjectInfo data-test="client-info">
+                Comprador
+                <Info>
+                    <h1>Nome: {orderInfo.name}</h1>
+                    <h2>CPF: {orderInfo.cpf}</h2>
+                </Info>
+            </SubjectInfo>
 
-                <Link to={"/"}>
-                    <Return data-test="go-home-btn">
-                        <p>Voltar pra Home</p>
-                    </Return>
-                </Link>
-
-            </Final>
+            <Return>
+            <Link to={"/"}>
+                <Button data-test="go-home-btn">
+                    <p>Voltar pra Home</p>
+                </Button>
+            </Link>
+            </Return>
         </>
     )
 }
@@ -123,11 +115,11 @@ const Info = styled.div`
     }
 `
 
-const Return = styled.button`
+const Button = styled.button`
     width: 220px;
     height: 42px;
     align-items: center;
-    margin: 0 auto 0 80px;
+    margin-right: auto;
     background-color: #E8833A;
     border-radius: 3px;
     border-color: #E8833A;
@@ -176,6 +168,7 @@ const Title = styled.div`
     }
 `
 
-const Final = styled.div`
-    height: 100px;
+const Return = styled.div`
+    display: flex;
+    margin: 0 auto 0 auto;
 `
