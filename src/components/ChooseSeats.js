@@ -36,7 +36,11 @@ export default function ChooseSeats({ setOrder }) {
     }, [idSessao]);
 
     if (seats === 0) {
-        return <div>Carregando...</div>
+        return (
+            <Wait>
+                Carregando ...
+            </Wait>
+        )
     }
 
     function selectSeat(seat) {
@@ -57,6 +61,14 @@ export default function ChooseSeats({ setOrder }) {
 
     function completeOrder(event) {
         event.preventDefault();
+
+        if (name === "") {
+            alert('Por favor, insira um nome válido')
+            return
+        } else if (CPF.length < 11) {
+            alert ('Por favor, insira um CPF válido')
+            return
+        }
 
         axios.post(
             "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", {
@@ -151,6 +163,14 @@ export default function ChooseSeats({ setOrder }) {
     )
 }
 
+const Wait = styled.div`
+    display: flex;
+    margin: auto;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 18px;
+`
+
 const SectionTitle = styled.div`
     display: flex;
     margin: 60px auto 0 auto;
@@ -163,10 +183,16 @@ const SectionTitle = styled.div`
 `
 
 const Seats = styled.ul`
+    width: 390px;
+    margin: 10px auto 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
+
+    @media only screen and (max-width: 375px) {
+        widtH: 95%;
+    }
 `
 
 const Seat = styled.button`
@@ -182,11 +208,21 @@ const Seat = styled.button`
     font-size: 11px;
     align-items: center;
     text-align: center;
+    
+    @media only screen and (max-width: 375px) {
+        margin: 5px 0 14px 7px;
+    }
 `
 
 const SeatTypes = styled.div`
+    width: 400px;
     display: flex;
+    margin: 5px auto 0 auto;
     justify-content: space-evenly;
+
+    @media only screen and (max-width: 375px) {
+        width: 90%;
+    }
 `
 
 const SeatText = styled.p`
@@ -287,7 +323,7 @@ const Text = styled.span`
 const Personal = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 20px 0 25px 20px;
+    margin: 20px auto 0 auto;
 
     p {
         font-family: 'Roboto';
@@ -307,6 +343,10 @@ const Personal = styled.div`
         padding-left: 8px;
         font-size: 16px;
     }
+
+    @media only screen and (max-width: 375px) {
+        height: 400px;
+    }
 `
 
 const Finish = styled.button`
@@ -314,8 +354,7 @@ const Finish = styled.button`
     height: 42px;
     display: flex;
     align-items: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto 0 auto;
     background-color: #E8833A;
     border-radius: 3px;
     border-color: #E8833A;
@@ -329,5 +368,9 @@ const Finish = styled.button`
         text-align: center;
         margin-left: 25px;
         color: #ffffff;
+    }
+
+    @media only screen and (max-width: 375px) {
+        margin-top: -50%;
     }
 `

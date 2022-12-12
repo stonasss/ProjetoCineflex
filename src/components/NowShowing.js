@@ -16,7 +16,11 @@ export default function NowShowing() {
     }, []);
 
     if (movies === 0) {
-        return <div>Carregando...</div>
+        return (
+            <Wait>
+                Carregando ...
+            </Wait>
+        )
     }
 
     return (
@@ -26,8 +30,8 @@ export default function NowShowing() {
             </SectionTitle>
             <Movies>
                 {movies.map(movie => (
-                    <Link to={`/sessoes/${movie.id}`}>
-                        <Movie key={movie.title}>
+                    <Link key={movie.title} to={`/sessoes/${movie.id}`}>
+                        <Movie>
                             <img src={movie.posterURL} alt={movie.title} />
                         </Movie>
                     </Link>
@@ -36,6 +40,14 @@ export default function NowShowing() {
         </>
     )
 }
+
+const Wait = styled.div`
+    display: flex;
+    margin: auto;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 18px;
+`
 
 const SectionTitle = styled.div`
     display: flex;
@@ -46,15 +58,25 @@ const SectionTitle = styled.div`
     font-weight: 400;
     font-size: 24px;
     color: #293845;
+
+    @media only screen and (max-width: 375px) {
+        margin: 75px auto 0 auto;
+    }
 `
 
 const Movies = styled.div`
+    width: 70%;
+    margin: 0 auto 0 auto;
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 100px;
     flex-wrap: wrap;
     align-items: center;
     background-color: #FFFFFF;
+    
+    @media only screen and (max-width: 375px) {
+        widtH: 90%;
+    }
 `
 
 const Movie = styled.div`

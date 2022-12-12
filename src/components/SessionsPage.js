@@ -16,7 +16,7 @@ export default function SessionsPage() {
             setFooterInfo(response.data);
         });
         req.catch((err) => console.log(err.response.data));
-    }, []);
+    }, [idFilme]);
 
     if (selectedMovie === 0) {
         return <div>Carregando...</div>
@@ -35,8 +35,8 @@ export default function SessionsPage() {
 
                         <Time>
                             {movie.showtimes.map(time => (
-                                <Link to={`/assentos/${time.id}`}>
-                                    <Button key={time.id}><p>{time.name}</p></Button>
+                                <Link key={time.id} to={`/assentos/${time.id}`}>
+                                    <Button><p>{time.name}</p></Button>
                                 </Link>
                             ))}
                         </Time>
@@ -52,7 +52,6 @@ export default function SessionsPage() {
                     </Image>
                     <Text>
                         <h1>{footerInfo.title}</h1>
-                        <h2></h2>
                     </Text>
                 </Content>
             </Footer>
@@ -72,7 +71,7 @@ const SectionTitle = styled.div`
 `
 
 const Sessions = styled.div`
-    margin: 10px 0 120px 25px;
+    margin: 10px auto 140px auto;
 
     p {
         font-family: 'Roboto';
@@ -80,6 +79,11 @@ const Sessions = styled.div`
         font-weight: 400;
         font-size: 20px;
         color: #293845;
+    }
+
+    @media only screen and (max-width: 375px) {
+        widtH: 95%;
+        margin: 15px auto 150px 20px;
     }
 `
 
