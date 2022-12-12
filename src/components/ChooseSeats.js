@@ -60,7 +60,6 @@ export default function ChooseSeats({ setOrder }) {
     }
 
     function completeOrder(event) {
-        event.preventDefault();
 
         if (seatNumber.length < 1) {
             alert('Por favor, escolha pelo menos um assento')
@@ -91,6 +90,8 @@ export default function ChooseSeats({ setOrder }) {
         }).catch(err => {
             console.log(err)
         });
+
+        event.preventDefault();
     }
 
     return (
@@ -144,7 +145,7 @@ export default function ChooseSeats({ setOrder }) {
                 <p>CPF do comprador:</p>
                 <input
                     data-test="client-cpf"
-                    type="text"
+                    type="tel"
                     placeholder="Digite seu CPF..."
                     value={CPF}
                     onChange={event => setCPF(event.target.value)}
@@ -193,7 +194,7 @@ const SectionTitle = styled.div`
 `
 
 const Seats = styled.ul`
-    width: 390px;
+    width: 600px;
     margin: 10px auto 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -364,7 +365,7 @@ const Finish = styled.button`
     height: 42px;
     display: flex;
     align-items: center;
-    margin: 20px auto 0 auto;
+    margin: 40px auto 150px auto;
     background-color: #E8833A;
     border-radius: 3px;
     border-color: #E8833A;
