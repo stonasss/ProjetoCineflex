@@ -62,8 +62,11 @@ export default function ChooseSeats({ setOrder }) {
     function completeOrder(event) {
         event.preventDefault();
 
-        if (name === "") {
-            alert('Por favor, insira um nome válido')
+        if (seatNumber.length < 1) {
+            alert('Por favor, escolha pelo menos um assento')
+            return
+        } else if (name === "" ) {
+            alert ('Por favor, insira um nome válido ')
             return
         } else if (CPF.length < 11) {
             alert ('Por favor, insira um CPF válido')
@@ -99,12 +102,14 @@ export default function ChooseSeats({ setOrder }) {
                 {seats.map(seat => {
                     return seat.isAvailable === false ? (
                         <Seat
+                            data-test="seat"
                             key={seat.id}
                             background={"#FBE192"}
                             onClick={() => selectSeat(seat)}
                         >{seat.name.padStart(2, '0')}</Seat>
                     ) : (
                         <Seat
+                            data-test="seat"
                             key={seat.id}
                             background={selectedSeats.includes(seat.id) ? state : "#C3CFD9"}
                             onClick={() => selectSeat(seat)}
@@ -130,6 +135,7 @@ export default function ChooseSeats({ setOrder }) {
             <Personal>
                 <p>Nome do comprador:</p>
                 <input
+                    data-test="client-name"
                     type="text"
                     placeholder="Digite seu nome..."
                     value={name}
@@ -137,6 +143,7 @@ export default function ChooseSeats({ setOrder }) {
                 ></input>
                 <p>CPF do comprador:</p>
                 <input
+                    data-test="client-cpf"
                     type="text"
                     placeholder="Digite seu CPF..."
                     value={CPF}
@@ -144,11 +151,14 @@ export default function ChooseSeats({ setOrder }) {
                 ></input>
             </Personal>
 
-            <Finish onClick={completeOrder}>
+            <Finish 
+                data-test="book-seat-btn"
+                onClick={completeOrder}
+            >
                 <p>Reservar assento(s)</p>
             </Finish>
 
-            <Footer>
+            <Footer data-test="footer">
                 <Content>
                     <Image>
                         <img src={footerInfo.posterURL} alt={footerInfo.title} />

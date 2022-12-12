@@ -31,7 +31,7 @@ export default function NowShowing() {
             <Movies>
                 {movies.map(movie => (
                     <Link key={movie.title} to={`/sessoes/${movie.id}`}>
-                        <Movie>
+                        <Movie data-test="movie">
                             <img src={movie.posterURL} alt={movie.title} />
                         </Movie>
                     </Link>
