@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-export default function ChooseSeats({setOrder}) {
+export default function ChooseSeats({ setOrder }) {
     const { idSessao } = useParams();
     const [seats, setSeats] = useState([]);
     const [selectedSeats, setselectedSeats] = useState([]);
@@ -55,27 +55,27 @@ export default function ChooseSeats({setOrder}) {
         }
     }
 
-    function completeOrder(event){
+    function completeOrder(event) {
         event.preventDefault();
 
         axios.post(
             "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", {
-                ids: selectedSeats,
+            ids: selectedSeats,
+            name: name,
+            cpf: CPF
+        }).then(res => {
+            setOrder({
+                movie: movie,
+                date: date,
+                hour: hour,
+                num: seatNumber,
                 name: name,
                 cpf: CPF
-            }).then(res => {
-                setOrder({
-                    movie:{movie},
-                    date:{date},
-                    hour:{hour},
-                    num:{seatNumber},
-                    name:{name},
-                    cpf:{CPF}
-                })
-                next("/sucesso")
-            }).catch(err => {
-                console.log(err)
-            });
+            })
+            next("/sucesso")
+        }).catch(err => {
+            console.log(err)
+        });
     }
 
     return (
@@ -86,14 +86,14 @@ export default function ChooseSeats({setOrder}) {
             <Seats>
                 {seats.map(seat => {
                     return seat.isAvailable === false ? (
-                        <Seat 
+                        <Seat
                             key={seat.id}
                             background={"#FBE192"}
                             onClick={() => selectSeat(seat)}
                         >{seat.name.padStart(2, '0')}</Seat>
                     ) : (
-                        <Seat 
-                            key={seat.id} 
+                        <Seat
+                            key={seat.id}
                             background={selectedSeats.includes(seat.id) ? state : "#C3CFD9"}
                             onClick={() => selectSeat(seat)}
                         >{seat.name.padStart(2, '0')}</Seat>
@@ -139,7 +139,7 @@ export default function ChooseSeats({setOrder}) {
             <Footer>
                 <Content>
                     <Image>
-                        <img src={footerInfo.posterURL} alt={footerInfo.title}/>
+                        <img src={footerInfo.posterURL} alt={footerInfo.title} />
                     </Image>
                     <Text>
                         <h1>{footerInfo.title}</h1>
@@ -153,8 +153,7 @@ export default function ChooseSeats({setOrder}) {
 
 const SectionTitle = styled.div`
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 60px auto 0 auto;
     padding: 50px 0 35px 0;
     font-family: 'Roboto';
     font-style: normal;

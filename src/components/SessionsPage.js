@@ -36,7 +36,7 @@ export default function SessionsPage() {
                         <Time>
                             {movie.showtimes.map(time => (
                                 <Link to={`/assentos/${time.id}`}>
-                                    <Button><p>{time.name}</p></Button>
+                                    <Button key={time.id}><p>{time.name}</p></Button>
                                 </Link>
                             ))}
                         </Time>
@@ -48,7 +48,7 @@ export default function SessionsPage() {
             <Footer>
                 <Content>
                     <Image>
-                        <img src={footerInfo.posterURL} />
+                        <img src={footerInfo.posterURL} alt={footerInfo.title} />
                     </Image>
                     <Text>
                         <h1>{footerInfo.title}</h1>
@@ -62,8 +62,7 @@ export default function SessionsPage() {
 
 const SectionTitle = styled.div`
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 70px auto 0 auto;
     padding: 50px 0 35px 0;
     font-family: 'Roboto';
     font-style: normal;

@@ -27,7 +27,7 @@ export default function NowShowing() {
             <Movies>
                 {movies.map(movie => (
                     <Link to={`/sessoes/${movie.id}`}>
-                        <Movie key={movie.id}>
+                        <Movie key={movie.title}>
                             <img src={movie.posterURL} alt={movie.title} />
                         </Movie>
                     </Link>
@@ -39,8 +39,7 @@ export default function NowShowing() {
 
 const SectionTitle = styled.div`
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 70px auto 0 auto;
     padding: 50px 0 35px 0;
     font-family: 'Roboto';
     font-style: normal;

@@ -15,8 +15,8 @@ export default function CineScreen() {
       <Routes>
         <Route path="/" element={<NowShowing />} />
         <Route path="/sessoes/:idFilme" element={<SessionsPage />} />
-        <Route path="/assentos/:idSessao" element={<ChooseSeats setOrder={setOrder}/>} />
-        <Route path="/sucesso" element={<FinalOrder order={order}/>} />
+        <Route path="/assentos/:idSessao" element={<ChooseSeats setOrder={setOrder} />} />
+        <Route path="/sucesso" element={<FinalOrder order={order} />} />
       </Routes>
     </BrowserRouter>
   )
