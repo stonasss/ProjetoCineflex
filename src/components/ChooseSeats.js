@@ -1,29 +1,36 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-export default function ChooseSeats() {
+export default function ChooseSeats({setOrder}) {
     const { idSessao } = useParams();
     const [seats, setSeats] = useState([]);
     const [selectedSeats, setselectedSeats] = useState([]);
     const [seatNumber, setSeatNumber] = useState([]);
+    const [movie, setMovie] = useState("");
     const [footerInfo, setFooterInfo] = useState([]);
     const [day, setDay] = useState([]);
+    const [date, setDate] = useState("");
     const [time, setTime] = useState([]);
     const [state, setState] = useState("#C3CFD9");
     const [name, setName] = useState("");
     const [CPF, setCPF] = useState("");
+    const [hour, setHour] = useState("")
+    const next = useNavigate();
 
     useEffect(() => {
         const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
 
         req.then((response) => {
+            setSeats(response.data.seats);
+            setFooterInfo(response.data.movie);
             setTime(response.data.day);
             setDay(response.data);
-            setSeats(response.data.seats);
-            console.log(response.data.seats);
-            setFooterInfo(response.data.movie);
+            setMovie(response.data.movie.title);
+            setDate(response.data.day.date);
+            setHour(response.data.name);
+            console.log();
         });
         req.catch((err) => console.log(err.response.data));
     }, [idSessao]);
@@ -56,7 +63,19 @@ export default function ChooseSeats() {
                 ids: selectedSeats,
                 name: name,
                 cpf: CPF
-            })
+            }).then(res => {
+                setOrder({
+                    movie:{movie},
+                    date:{date},
+                    hour:{hour},
+                    num:{seatNumber},
+                    name:{name},
+                    cpf:{CPF}
+                })
+                next("/sucesso")
+            }).catch(err => {
+                console.log(err)
+            });
     }
 
     return (
@@ -96,6 +115,27 @@ export default function ChooseSeats() {
                 </Yellow>
             </SeatTypes>
 
+            <Personal>
+                <p>Nome do comprador:</p>
+                <input
+                    type="text"
+                    placeholder="Digite seu nome..."
+                    value={name}
+                    onChange={event => setName(event.target.value)}
+                ></input>
+                <p>CPF do comprador:</p>
+                <input
+                    type="text"
+                    placeholder="Digite seu CPF..."
+                    value={CPF}
+                    onChange={event => setCPF(event.target.value)}
+                ></input>
+            </Personal>
+
+            <Finish onClick={completeOrder}>
+                <p>Reservar assento(s)</p>
+            </Finish>
+
             <Footer>
                 <Content>
                     <Image>
@@ -107,27 +147,7 @@ export default function ChooseSeats() {
                     </Text>
                 </Content>
             </Footer>
-
-            <Personal>
-                <p>Nome do comprador:</p>
-                <input
-                    type="text"
-                    placeholder="Digite seu nome..."
-                    value={name}
-                ></input>
-                <p>CPF do comprador:</p>
-                <input
-                    type="text"
-                    placeholder="Digite seu CPF..."
-                    value={CPF}
-                ></input>
-            </Personal>
-
-            <Finish onClick={completeOrder}>
-                <p>Reservar assento(s)</p>
-            </Finish>
         </>
-
     )
 }
 
