@@ -65,11 +65,11 @@ export default function ChooseSeats({ setOrder }) {
         if (seatNumber.length < 1) {
             alert('Por favor, escolha pelo menos um assento')
             return
-        } else if (name === "" ) {
-            alert ('Por favor, insira um nome válido ')
+        } else if (name === "") {
+            alert('Por favor, insira um nome válido ')
             return
         } else if (CPF.length < 11) {
-            alert ('Por favor, insira um CPF válido')
+            alert('Por favor, insira um CPF válido')
             return
         }
 
@@ -151,15 +151,15 @@ export default function ChooseSeats({ setOrder }) {
                 ></input>
             </Personal>
 
-            <Finish 
+            <Finish
                 data-test="book-seat-btn"
                 onClick={completeOrder}
             >
                 <p>Reservar assento(s)</p>
             </Finish>
 
-            <Footer data-test="footer">
-                <Content>
+            <Footer>
+                <Content data-test="footer">
                     <Image>
                         <img src={footerInfo.posterURL} alt={footerInfo.title} />
                     </Image>
