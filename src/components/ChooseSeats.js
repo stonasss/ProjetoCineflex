@@ -6,9 +6,14 @@ import React, { useEffect, useState } from "react";
 export default function ChooseSeats() {
     const { idSessao } = useParams();
     const [seats, setSeats] = useState([]);
+    const [selectedSeats, setselectedSeats] = useState([]);
+    const [seatNumber, setSeatNumber] = useState([]);
     const [footerInfo, setFooterInfo] = useState([]);
     const [day, setDay] = useState([]);
     const [time, setTime] = useState([]);
+    const [state, setState] = useState("#C3CFD9");
+    const [name, setName] = useState("");
+    const [CPF, setCPF] = useState("");
 
     useEffect(() => {
         const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
@@ -17,6 +22,7 @@ export default function ChooseSeats() {
             setTime(response.data.day);
             setDay(response.data);
             setSeats(response.data.seats);
+            console.log(response.data.seats);
             setFooterInfo(response.data.movie);
         });
         req.catch((err) => console.log(err.response.data));
@@ -26,15 +32,54 @@ export default function ChooseSeats() {
         return <div>Carregando...</div>
     }
 
+    function selectSeat(seat) {
+        if (seat.isAvailable === false) {
+            alert('O assento escolhido não está disponível')
+
+        } else if (selectedSeats.includes(seat.id) && state === "#1AAE9E") {
+            setselectedSeats(selectedSeats.filter(clicked => clicked !== seat.id));
+            setSeatNumber(selectedSeats.filter(clicked => clicked !== seat.name));
+
+        } else {
+            setselectedSeats([...selectedSeats, seat.id])
+            setSeatNumber([...seatNumber, seat.name])
+            setState("#1AAE9E")
+
+        }
+    }
+
+    function completeOrder(event){
+        event.preventDefault();
+
+        axios.post(
+            "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", {
+                ids: selectedSeats,
+                name: name,
+                cpf: CPF
+            })
+    }
+
     return (
         <>
             <SectionTitle>
                 Selecione os assentos
             </SectionTitle>
             <Seats>
-                {seats.map(seat => (
-                    <Seat>{seat.name}</Seat>
-                ))}
+                {seats.map(seat => {
+                    return seat.isAvailable === false ? (
+                        <Seat 
+                            key={seat.id}
+                            background={"#FBE192"}
+                            onClick={() => selectSeat(seat)}
+                        >{seat.name.padStart(2, '0')}</Seat>
+                    ) : (
+                        <Seat 
+                            key={seat.id} 
+                            background={selectedSeats.includes(seat.id) ? state : "#C3CFD9"}
+                            onClick={() => selectSeat(seat)}
+                        >{seat.name.padStart(2, '0')}</Seat>
+                    );
+                })}
             </Seats>
             <SeatTypes>
                 <Green>
@@ -54,7 +99,7 @@ export default function ChooseSeats() {
             <Footer>
                 <Content>
                     <Image>
-                        <img src={footerInfo.posterURL} />
+                        <img src={footerInfo.posterURL} alt={footerInfo.title}/>
                     </Image>
                     <Text>
                         <h1>{footerInfo.title}</h1>
@@ -62,6 +107,25 @@ export default function ChooseSeats() {
                     </Text>
                 </Content>
             </Footer>
+
+            <Personal>
+                <p>Nome do comprador:</p>
+                <input
+                    type="text"
+                    placeholder="Digite seu nome..."
+                    value={name}
+                ></input>
+                <p>CPF do comprador:</p>
+                <input
+                    type="text"
+                    placeholder="Digite seu CPF..."
+                    value={CPF}
+                ></input>
+            </Personal>
+
+            <Finish onClick={completeOrder}>
+                <p>Reservar assento(s)</p>
+            </Finish>
         </>
 
     )
@@ -90,7 +154,7 @@ const Seat = styled.button`
     width: 26px;
     height: 26px;
     margin: 5px 0 14px 9px;
-    background-color: #C3CFD9;
+    background: ${props => props.background};
     border: 1px solid #808F9D;
     border-radius: 12px;
     font-family: 'Roboto';
@@ -104,7 +168,6 @@ const Seat = styled.button`
 const SeatTypes = styled.div`
     display: flex;
     justify-content: space-evenly;
-    margin: auto;
 `
 
 const SeatText = styled.p`
@@ -199,5 +262,53 @@ const Text = styled.span`
         font-style: normal;
         font-weight: 400;
         font-size: 26px;
+    }
+`
+
+const Personal = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 25px 20px;
+
+    p {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        color: #293845;
+        line-height: 42px;
+    }
+
+    input {
+        width: 320px;
+        height: 45px;
+        background-color: #FFFFFF;
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+        padding-left: 8px;
+        font-size: 16px;
+    }
+`
+
+const Finish = styled.button`
+    width: 225px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #E8833A;
+    border-radius: 3px;
+    border-color: #E8833A;
+
+    p {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        margin-left: 25px;
+        color: #ffffff;
     }
 `
