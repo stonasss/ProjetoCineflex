@@ -27,7 +27,10 @@ export default function SessionsPage() {
             <Sessions>
                 <>
                     {selectedMovie.map(movie =>
-                    <div key={movie.id} data-test="movie-day">
+                    <div 
+                        key={movie.id} 
+                        data-test="movie-day"
+                    >
                         <p>{movie.weekday} - {movie.date}</p>
                         <Time>
                             {movie.showtimes.map(time =>
@@ -35,17 +38,15 @@ export default function SessionsPage() {
                                     key={time.id}
                                     to={`/assentos/${time.id}`}
                                 >
-                                    <button
-                                        data-test="showtime"
-                                    >
-                                    {time.name}</button>
+                                <button data-test="showtime">
+                                    {time.name}
+                                </button>
                                 </Link>
                             )}
                         </Time>
                     </div>
                     )}
-                    </>
-                
+                </>
             </Sessions>
 
             <Footer data-test="footer">
