@@ -10,32 +10,32 @@ export default function FinalOrder({ order }) {
             <SuccessMSG>Pedido feito com sucesso!</SuccessMSG>
 
             <SubjectMovie>
-                <p data-test="movie-info">
+                <span data-test="movie-info">
                 Filme e Sessão
                 <Info>
                     <h1>{orderInfo.movie}</h1>
                     <h2>{orderInfo.date} {orderInfo.hour}</h2>
                 </Info>
-                </p>
+                </span>
             </SubjectMovie>
 
             <SubjectSeat data-test="seats-info">
-                <p data-test="seats-info">
+                <span data-test="seats-info">
                 Ingressos
                 <Info>
                     {seats.map(seat => <h1 key={seat}>{`Assento ${seat}`}</h1>)}
                 </Info>
-                </p>
+                </span>
             </SubjectSeat>
 
             <SubjectInfo data-test="client-info">
-                <p data-test="client-info">
+                <span data-test="client-info">
                 Comprador
                 <Info>
                     <h1>Nome: {orderInfo.name}</h1>
                     <h2>CPF: {orderInfo.cpf}</h2>
                 </Info>
-                </p>
+                </span>
             </SubjectInfo>
 
             <Return>
@@ -117,27 +117,6 @@ const Info = styled.div`
 
     h2 {
         padding-top: 4px;
-    }
-`
-
-const Button = styled.button`
-    width: 220px;
-    height: 42px;
-    align-items: center;
-    margin-right: auto;
-    background-color: #E8833A;
-    border-radius: 3px;
-    border-color: #E8833A;
-    padding: 0 42px 0 16px;
-
-    p {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        margin-left: 25px;
-        color: #ffffff;
     }
 `
 

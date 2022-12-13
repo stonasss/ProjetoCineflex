@@ -112,17 +112,6 @@ const Time = styled.div`
     }
 `
 
-const Button = styled.button`
-    width: 83px;
-    height: 43px;
-    background-color: #E8833A;
-    border-radius: 3px;
-    
-    p {
-        color: inherit;
-    }
-`
-
 const Footer = styled.footer`
     position: fixed;
     bottom: 0;

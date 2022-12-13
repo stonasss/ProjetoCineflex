@@ -52,6 +52,7 @@ export default function ChooseSeats({ setOrder }) {
     }
 
     function completeOrder(event) {
+        event.preventDefault();
 
         if (seatNumber.length < 1) {
             alert('Por favor, escolha pelo menos um assento')
@@ -82,8 +83,6 @@ export default function ChooseSeats({ setOrder }) {
         }).catch(err => {
             console.log(err)
         });
-
-        event.preventDefault();
     }
 
     return (
@@ -132,22 +131,24 @@ export default function ChooseSeats({ setOrder }) {
             </SeatTypes>
 
             <Personal>
-                <p>Nome do comprador:</p>
-                <input
-                    data-test="client-name"
-                    type="text"
-                    placeholder="Digite seu nome..."
-                    value={name}
-                    onChange={event => setName(event.target.value)}
-                ></input>
-                <p>CPF do comprador:</p>
-                <input
-                    data-test="client-cpf"
-                    type="tel"
-                    placeholder="Digite seu CPF..."
-                    value={CPF}
-                    onChange={event => setCPF(event.target.value)}
-                ></input>
+                <form>
+                    <p>Nome do comprador:</p>
+                    <input
+                        data-test="client-name"
+                        type="text"
+                        placeholder="Digite seu nome..."
+                        value={name}
+                        onChange={event => setName(event.target.value)}
+                    ></input>
+                    <p>CPF do comprador:</p>
+                    <input
+                        data-test="client-cpf"
+                        type="tel"
+                        placeholder="Digite seu CPF..."
+                        value={CPF}
+                        onChange={event => setCPF(event.target.value)}
+                    ></input>
+                </form>
             </Personal>
 
             <Finish>
@@ -162,10 +163,10 @@ export default function ChooseSeats({ setOrder }) {
                     <span>
                         <img src={footerInfo.posterURL} alt={footerInfo.title} />
                     </span>
-                    <p>
+                    <div>
                         <h1>{footerInfo.title}</h1>
                         <h2>{time.weekday} - {day.name}</h2>
-                    </p>
+                    </div>
                 </footer>
             </Bottom>
         </>
@@ -309,7 +310,7 @@ const Bottom = styled.footer`
         align-items: center;
     }
 
-    p {
+    div {
         display: flex;
         flex-direction: column;
     }
