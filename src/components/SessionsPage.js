@@ -25,17 +25,12 @@ export default function SessionsPage() {
             </SectionTitle>
 
             <Sessions>
-                {selectedMovie.map(movie => (
-                    <>
-                        <p
-                            data-test="movie-day"
-                            key={movie.id}
-                        >
-                            {movie.weekday} - {movie.date}
-                        </p>
-
+                <>
+                    {selectedMovie.map(movie =>
+                    <div key={movie.id} data-test="movie-day">
+                        <p>{movie.weekday} - {movie.date}</p>
                         <Time>
-                            {movie.showtimes.map(time => (
+                            {movie.showtimes.map(time =>
                                 <Link
                                     key={time.id}
                                     to={`/assentos/${time.id}`}
@@ -45,11 +40,12 @@ export default function SessionsPage() {
                                     >
                                     {time.name}</button>
                                 </Link>
-                            ))}
+                            )}
                         </Time>
-
+                    </div>
+                    )}
                     </>
-                ))}
+                
             </Sessions>
 
             <Footer data-test="footer">
