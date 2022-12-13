@@ -43,7 +43,7 @@ export default function SessionsPage() {
                                     <button
                                         data-test="showtime"
                                     >
-                                    <p>{time.name}</p></button>
+                                    {time.name}</button>
                                 </Link>
                             ))}
                         </Time>
@@ -105,10 +105,11 @@ const Time = styled.div`
         height: 43px;
         background-color: #E8833A;
         border-radius: 3px;
-    }
-
-    button > p {
-        color: inherit;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        color: #000000;
     }
 `
 
